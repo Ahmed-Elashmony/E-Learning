@@ -14,7 +14,7 @@ const appRouter = (app, express) => {
   app.use("/user", userRouter);
 
   app.use("/", (req, res, next) => {
-    return res.sent("Home Page");
+    return res.send("Home Page");
   });
 
   app.all("*", (req, res) => {
