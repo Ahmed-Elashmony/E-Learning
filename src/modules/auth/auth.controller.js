@@ -2,7 +2,7 @@ import userModel from "../../../DB/model/user.model.js";
 import tokenModel from "../../../DB/model/token.model.js";
 import { asyncHandler } from "../../utils/asyncHandling.js";
 import bcryptjs from "bcryptjs";
-import Cryptr from "cryptr";
+// import Cryptr from "cryptr";
 import crypto from "crypto";
 import sendEmail from "../../utils/sentEmail.js";
 import { ConfirmTemp, resetPassTemp } from "../../utils/htmlTemps.js";
@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken";
 import randomstring from "randomstring";
 import cartModel from "../../../DB/model/cart.model.js";
 
+// SignUp
 export const signUp = asyncHandler(async (req, res, next) => {
   // receive data
   const { userName, email, password } = req.body;
@@ -50,6 +51,7 @@ export const signUp = asyncHandler(async (req, res, next) => {
     : res.json({ message: "something went wrong", isSent });
 });
 
+// Confirm Email
 export const confirmEmail = asyncHandler(async (req, res, next) => {
   // receive activation code
   const { activationCode } = req.params;
@@ -70,6 +72,7 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
   return res.send("your email is confirmed"); // res.redirect("SignIn Page")
 });
 
+// LogIn
 export const LogIn = asyncHandler(async (req, res, next) => {
   // receive data
   const { email, password } = req.body;
@@ -102,6 +105,7 @@ export const LogIn = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ message: "Done", BrearerToken });
 });
 
+// Sent forget password code
 export const forgetCode = asyncHandler(async (req, res, next) => {
   // check email
   const { email } = req.body;
@@ -124,6 +128,7 @@ export const forgetCode = asyncHandler(async (req, res, next) => {
   return res.status(200).send("Done, check your Email");
 });
 
+// Verify Code
 export const verifyCode = asyncHandler(async (req, res, next) => {
   const { code } = req.body;
   // check user
@@ -150,6 +155,7 @@ export const verifyCode = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ message: "Done", token });
 });
 
+// Change Password
 export const changePassword = asyncHandler(async (req, res, next) => {
   // Recieve data
   const { password } = req.body;
@@ -169,4 +175,14 @@ export const changePassword = asyncHandler(async (req, res, next) => {
   await tokenModel.deleteOne({ token });
   // response
   return res.status(200).json({ message: "Done" });
+});
+
+// LogOut
+export const logOut = asyncHandler(async (req, res, next) => {
+  // Offline account
+  await userModel.findByIdAndUpdate(req.user.id, { isOnline: false });
+  // Invaild all tokens
+  await tokenModel.updateMany({ user: req.user.id }, { vaild: false });
+  // response
+  return res.json({ message: "Done" });
 });
