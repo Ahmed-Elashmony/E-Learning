@@ -123,7 +123,7 @@ export const forgetCode = asyncHandler(async (req, res, next) => {
     subject: "Reset Password",
     html: resetPassTemp(code),
   });
-  return res.status(200).send("Done, check your Email");
+  return res.status(200).send("Done", code);
 });
 
 // Verify Code
