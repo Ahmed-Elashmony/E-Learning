@@ -13,6 +13,10 @@ const appRouter = (app, express) => {
   app.use("/auth", authRouter);
   app.use("/user", userRouter);
 
+  app.use("/", (req, res, next) => {
+    return res.sent("Home Page");
+  });
+
   app.all("*", (req, res) => {
     return res.json({ message: "inVaild Path" });
   });
