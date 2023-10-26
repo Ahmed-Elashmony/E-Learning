@@ -16,22 +16,21 @@ const isAuth = asyncHandler(async (req, res, next) => {
     return next(new Error("inVaild Payload", { cause: 404 }));
   }
   const user = await userModel.findById(decoded.id);
-  // check token in DB
-  const tokenDB = await tokenModel.findOne({ token, valid: true });
-  if (!tokenDB) {
-    return next(new Error("Token Not Vaild", { cause: 404 }));
-  }
   // check Online and deleted accounts
   if (!user.isOnline) {
     return next(new Error("LogIn First", { cause: 400 }));
   }
   if (user.isDeleted) {
     return next(
-      new Error(
-        "UR ACC Is Deleted,LogIn Before 30th in this month to recover it",
-        { cause: 400 }
-      )
+      new Error("UR ACC Is Deleted,LogIn Before 30th to recover it", {
+        cause: 400,
+      })
     );
+  }
+  // check token in DB
+  const tokenDB = await tokenModel.findOne({ token, valid: true });
+  if (!tokenDB) {
+    return next(new Error("Token Not Vaild", { cause: 404 }));
   }
   // pass user
   req.user = user;

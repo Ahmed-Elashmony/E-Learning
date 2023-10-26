@@ -20,6 +20,7 @@ const userSchmea = new Schema(
       required: true,
       min: 8,
     },
+    fullName: String,
     role: {
       type: String,
       num: ["admin", "user"],
