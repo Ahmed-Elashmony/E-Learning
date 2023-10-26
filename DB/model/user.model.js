@@ -23,7 +23,7 @@ const userSchmea = new Schema(
     role: {
       type: String,
       num: ["admin", "user"],
-      required: true,
+      default: "user",
     },
     gender: {
       type: String,
@@ -31,7 +31,6 @@ const userSchmea = new Schema(
     },
     age: {
       type: Number,
-      required: true,
       min: 4,
       max: 100,
     },
