@@ -6,10 +6,6 @@ export const signUpSchema = joi
     email: joi.string().email().required(),
     password: joi.string().min(8).required(),
     cPassword: joi.string().valid(joi.ref("password")).required(),
-    age: joi.number().integer().min(18).max(100).required(),
-    phone: joi.string().empty(""),
-    gender: joi.string().valid("male", "female"),
-    role: joi.string().valid("user", "admin"),
   })
   .required();
 
