@@ -6,6 +6,15 @@ import * as validators from "./user.validation.js";
 import isAuth from "../../middleware/authntication.middleware.js";
 
 router.patch(
+  "/updateProfile",
+  isAuth,
+  validation(validators.updateSchema),
+  userController.updateProfile
+);
+
+router.delete("/delete", isAuth, userController.deleteAcc);
+
+router.patch(
   "/wishlist/:courseId",
   isAuth,
   validation(validators.wishlistSchema),

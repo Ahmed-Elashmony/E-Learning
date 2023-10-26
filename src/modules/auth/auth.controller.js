@@ -2,7 +2,6 @@ import userModel from "../../../DB/model/user.model.js";
 import tokenModel from "../../../DB/model/token.model.js";
 import { asyncHandler } from "../../utils/asyncHandling.js";
 import bcryptjs from "bcryptjs";
-// import Cryptr from "cryptr";
 import crypto from "crypto";
 import sendEmail from "../../utils/sentEmail.js";
 import { ConfirmTemp, resetPassTemp } from "../../utils/htmlTemps.js";
@@ -25,9 +24,6 @@ export const signUp = asyncHandler(async (req, res, next) => {
   }
   // hash password
   const hashPassword = await bcryptjs.hash(password, +process.env.SALAT_ROUND);
-  //   encrypt phone
-  // const cryptr = new Cryptr(process.env.CRPTO_PHONE);
-  // const encryptPhone = cryptr.encrypt(phone);
   // generate activation
   const activationCode = crypto.randomBytes(64).toString("hex");
   // create user
@@ -100,6 +96,8 @@ export const LogIn = asyncHandler(async (req, res, next) => {
   });
   // change online state
   checkEmail.isOnline = true;
+  // change Del state
+  checkEmail.isDeleted = false;
   await checkEmail.save();
   // sent response
   return res.status(200).json({ message: "Done", BrearerToken });
