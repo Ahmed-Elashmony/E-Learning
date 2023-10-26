@@ -12,7 +12,7 @@ import cartModel from "../../../DB/model/cart.model.js";
 
 export const signUp = asyncHandler(async (req, res, next) => {
   // receive data
-  const { userName, email, password, gender, phone, role, age } = req.body;
+  const { userName, email, password } = req.body;
   // check user exists
   const checkEmail = await userModel.findOne({ email });
   if (checkEmail) {
@@ -25,8 +25,8 @@ export const signUp = asyncHandler(async (req, res, next) => {
   // hash password
   const hashPassword = await bcryptjs.hash(password, +process.env.SALAT_ROUND);
   //   encrypt phone
-  const cryptr = new Cryptr(process.env.CRPTO_PHONE);
-  const encryptPhone = cryptr.encrypt(phone);
+  // const cryptr = new Cryptr(process.env.CRPTO_PHONE);
+  // const encryptPhone = cryptr.encrypt(phone);
   // generate activation
   const activationCode = crypto.randomBytes(64).toString("hex");
   // create user
@@ -34,10 +34,6 @@ export const signUp = asyncHandler(async (req, res, next) => {
     userName,
     email,
     password: hashPassword,
-    phone: encryptPhone,
-    gender,
-    role,
-    age,
     activationCode,
   });
   // create confirmLink
