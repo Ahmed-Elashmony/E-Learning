@@ -182,7 +182,7 @@ export const logOut = asyncHandler(async (req, res, next) => {
   // Offline account
   await userModel.findByIdAndUpdate(req.user.id, { isOnline: false });
   // Invaild all tokens
-  await tokenModel.updateMany({ user: req.user.id }, { vaild: false });
+  await tokenModel.updateMany({ user: req.user.id }, { valid: false });
   // response
   return res.json({ message: "Done" });
 });
