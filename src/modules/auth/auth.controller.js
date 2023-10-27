@@ -65,7 +65,7 @@ export const confirmEmail = asyncHandler(async (req, res, next) => {
   // Create Cart
   await cartModel.create({ user: user._id });
 
-  return res.send("your email is confirmed"); // res.redirect("SignIn Page")
+  return res.redirect("https://e-learning-azure.vercel.app/signin");
 });
 
 // LogIn
