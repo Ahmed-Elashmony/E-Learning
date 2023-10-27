@@ -51,6 +51,9 @@ export const signUp = asyncHandler(async (req, res, next) => {
 export const confirmEmail = asyncHandler(async (req, res, next) => {
   // receive activation code
   const { activationCode } = req.params;
+  if (!activationCode) {
+    return res.redirect("https://e-learning-azure.vercel.app/signin");
+  }
   // confirm email and delete confirmationCode
   const user = await userModel.findOneAndUpdate(
     { activationCode },
