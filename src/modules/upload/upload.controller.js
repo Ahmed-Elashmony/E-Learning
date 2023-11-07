@@ -6,8 +6,8 @@ export const getBlobUrl = asyncHandler(async (req, res, next) => {
     const {fileName,fileType} = req.body
     const containerName = 'upload';
     const blobName =`${fileName}_${uuidv4()}.${fileType}`
-    const SasTokenUrl =await generateSASUrl(process.env.accountName,process.env.accountKey,containerName,blobName,'racwd' , 30)
-    res.json({SasTokenUrl:SasTokenUrl})
+    const response =await generateSASUrl(process.env.accountName,process.env.accountKey,containerName,blobName,'racwd' , 30)
+    res.json(response)
 
 })
 
