@@ -1,35 +1,60 @@
-import {BlobServiceClient,generateBlobSASQueryParameters,BlobSASPermissions,StorageSharedKeyCredential } from "@azure/storage-blob"
+import {
+  BlobSASPermissions,
+  BlobServiceClient,
+  ContainerClient,
+  SASProtocol,
+  StorageSharedKeyCredential
+} from '@azure/storage-blob';
 
-const uploadFile=(containerName,blobName)=>{
-    const accountName = process.env.accountName;
-    const accountKey =process.env.accountKey;
-    const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
 
-    const blobServiceClient = new BlobServiceClient(
-      `https://${accountName}.blob.core.windows.net`,
-      sharedKeyCredential
-    );
-    const containerClient = blobServiceClient.getContainerClient(containerName);
+async function createContainer(containerName,blobServiceClient){
+  const containerClient = blobServiceClient.getContainerClient(containerName);
+  await containerClient.createIfNotExists();
 
-    // Get the blob client
-    const blobClient = containerClient.getBlobClient(blobName);
-
-    // Get the Blob URL
-
-    // Define the SAS options
-    const sasOptions = {
-      startsOn: new Date(),
-      expiresOn: new Date(new Date().getTime() +86400),
-      permissions: BlobSASPermissions.parse('racwd'),
-    };
-
-    try {
-      // Generate the SAS token
-      const sasToken = generateBlobSASQueryParameters(sasOptions, sharedKeyCredential).toString();
-      const blobUrlWithSas = blobClient.url + sasToken;
-      return {sasToken:sasToken , blobUrlWithSas:blobUrlWithSas}
-    } catch (error) {
-      console.error('Error generating SAS token:' + error);
-    }
+  return containerClient;
 }
-export default uploadFile;
+async function getBlobServiceClient(serviceName, serviceKey){
+  const sharedKeyCredential = new StorageSharedKeyCredential(
+    serviceName,
+    serviceKey
+  );
+  const blobServiceClient = new BlobServiceClient(
+    `https://${serviceName}.blob.core.windows.net`,
+    sharedKeyCredential
+  );
+
+  return blobServiceClient;
+}
+
+export const generateSASUrl = async (serviceName,serviceKey,containerName,
+  fileName, // hierarchy of folders and file name: 'folder1/folder2/filename.ext'
+  permissions = 'r', // default read only
+  timerange = 1 // default 1 minute
+)=> {
+  if (!serviceName || !serviceKey || !fileName || !containerName) {
+    return 'Generate SAS function missing parameters';
+  }
+
+  const blobServiceClient =await getBlobServiceClient(serviceName, serviceKey);
+  const containerClient = await createContainer(
+    containerName,
+    blobServiceClient
+  );
+  const blockBlobClient = await containerClient.getBlockBlobClient(fileName);
+
+  // Best practice: create time limits
+  const SIXTY_MINUTES = timerange * 60 * 1000;
+  const NOW = new Date();
+
+  // Create SAS URL
+  const accountSasTokenUrl = await blockBlobClient.generateSasUrl({
+    startsOn: NOW,
+    expiresOn: new Date(new Date().valueOf() + SIXTY_MINUTES),
+    permissions: BlobSASPermissions.parse(permissions), // Read only permission to the blob
+    protocol: SASProtocol.Https // Only allow HTTPS access to the blob
+  });
+  
+  return accountSasTokenUrl;
+};
+
+export default generateSASUrl;
