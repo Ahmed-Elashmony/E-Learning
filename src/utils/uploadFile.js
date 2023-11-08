@@ -54,7 +54,7 @@ export const generateSASUrl = async (serviceName,serviceKey,containerName,
     protocol: SASProtocol.Https // Only allow HTTPS access to the blob
   });
   
-  return accountSasTokenUrl;
+  return {accountSasTokenUrl:accountSasTokenUrl,fileUrl:blockBlobClient.url};
 };
 
 export default generateSASUrl;
