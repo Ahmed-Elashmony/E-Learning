@@ -23,12 +23,12 @@ const userSchmea = new Schema(
     fullName: String,
     role: {
       type: String,
-      num: ["admin", "user"],
+      enum: ["admin", "user"],
       default: "user",
     },
     gender: {
       type: String,
-      num: ["male", "female"],
+      enum: ["male", "female"],
     },
     age: {
       type: Number,
