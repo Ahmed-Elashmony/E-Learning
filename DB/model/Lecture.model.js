@@ -7,9 +7,9 @@ const lectureSchema = new Schema(
         ref: "Course",
         reuired:true
     },
-    courseChapter:{
+    chapter:{
         type: Types.ObjectId,
-        ref: "CourseChapter",
+        ref: "Chapter",
         reuired:true
     },
     number:{
@@ -21,11 +21,6 @@ const lectureSchema = new Schema(
     required:true
     },
     
-    lectureType: {
-        type: String,
-        num: ["video", "article"],
-        required:true
-      },
     title:{
         type:String,
         required:true
@@ -35,9 +30,11 @@ const lectureSchema = new Schema(
     },
     videoUrl:{
         type:String,
-        required: function () {
-            return this.type==="video";
-        }
+        required: true
+    },
+    duaration:{
+        type:String,
+        required:true
     },
     resources:[
         {
@@ -50,15 +47,7 @@ const lectureSchema = new Schema(
             }
         }
     ]
-        ,
-    article:{
-        type:String,
-        required: function () {
-            return this.type==="article";
-        }
-    }
     
-
   },
 
     { timestamps: true }

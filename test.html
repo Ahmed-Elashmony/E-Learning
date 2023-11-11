@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quill Output Example</title>
+  <!-- Include Quill styles -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Create a container for the Quill editor -->
+<div id="editor-container" style="height: 300px;"></div>
+
+<!-- Include Quill library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<script>
+  // Initialize Quill
+  var quill = new Quill('#editor-container', {
+    theme: 'snow'  // Set the theme (snow is one of the built-in themes)
+  });
+
+  // Set some content
+  quill.clipboard.dangerouslyPasteHTML('<p>This is <strong>Quill text</strong>.</p>');
+
+  // Retrieve the HTML content
+  var quillHtml = document.getElementById('editor-container').innerHTML;
+
+  // Log or use the HTML content as needed
+  console.log('Quill HTML Output:', quillHtml);
+</script>
+
+</body>
+</html>
