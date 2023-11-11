@@ -1,3 +1,5 @@
 node_modules
 .env
 DB/model/test.model.js
+test
+vercel.json

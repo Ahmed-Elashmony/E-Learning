@@ -1,13 +1,13 @@
 import { Schema, model ,Types} from "mongoose";
 
-const couresChapterSchema = new Schema(
+const chapterSchema = new Schema(
   {
-    coures:{
+    course:{
       type: Types.ObjectId,
       ref: "Course",
       reuired:true
     },
-    number:{
+    order:{
       type:Number,
       required:true
     },
@@ -26,7 +26,12 @@ const couresChapterSchema = new Schema(
         type: Types.ObjectId,
         ref: "Lecture",
            
-    }]
+    }],
+    // content:[{
+    //   contentType:{type:String,required:true},
+
+
+    // }]
   },
 
     { timestamps: true }
@@ -36,5 +41,5 @@ const couresChapterSchema = new Schema(
 
 
 
-const courseChapterModel = model("CourseChapter", couresChapterSchema);
-export default courseChapterModel;
+const chapterModel = model("Chapter", chapterSchema);
+export default chapterModel;

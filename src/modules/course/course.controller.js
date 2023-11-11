@@ -1,6 +1,6 @@
 import { asyncHandler } from "../../utils/asyncHandling.js";
 import Course from "../../../DB/model/course.model.js";
-import Chapter from '../../../DB/model/courseChapter.model.js'
+import Chapter from '../../../DB/model/Chapter.model.js'
 import Lecture from "../../../DB/model/Lecture.model.js";
 // export const createCourse = asyncHandler(async (req, res, next) => {
 
@@ -99,8 +99,8 @@ export const editCourse = asyncHandler(async (req, res, next) => {
     if (!editedCourse) {
         return next(new Error("course not Found"), { cause: 404 });
     }
-    if (!(editedCourse.createdBy===req.userId)) {
-        return next(new Error("you donot have access"), { cause: 404 });
+    if (!(editedCourse.createdBy.toString()===req.userId)) {
+        return next(new Error("you donot have access"), { cause: 401 });
     }
     await Course.updateOne(({_id:courseId}),{
         title:courseTitle,

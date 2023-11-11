@@ -46,13 +46,12 @@ const courseSchema = new Schema(
       },
     },
     coverImage: {
-      url: { type: String, required:function () {
+       type: String, required:function () {
         return !this.drafted;
-      },},
-      id: { type: String, required:function () {
-        return !this.drafted;
-      },},
+      },
     },
+      
+    
     promotionalVideoUrl:{
       type:String
     },
