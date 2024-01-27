@@ -12,7 +12,7 @@ export const createCateg = asyncHandler(async (req, res, next) => {
 
 export const getCateg = asyncHandler(async (req, res, next) => {
   const category = await categoryModel.find({}, "name");
-  const categoryNames = category.map((Category) => Category.name);
+  // const categoryNames = category.map((Category) => Category.name);
   // response
-  return res.status(201).json({ message: "Done", categoryNames });
+  return res.status(201).json({ message: "Done", category });
 });

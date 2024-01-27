@@ -12,6 +12,6 @@ router.post(
   subCategoryController.createSubCateg
 );
 
-router.get("/:categoryId", isAuth, subCategoryController.getSubCateg);
+router.get("/:categoryId", subCategoryController.getSubCateg);
 
 export default router;

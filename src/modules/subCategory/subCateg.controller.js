@@ -14,8 +14,8 @@ export const createSubCateg = asyncHandler(async (req, res, next) => {
 export const getSubCateg = asyncHandler(async (req, res, next) => {
   const subCategory = await subCategoryModel
     .find({ categoryId: req.params.categoryId }, "name")
-    .populate([{ path: "categoryId" }]);
-  const subCategoryNames = subCategory.map((subCategory) => subCategory.name);
+    .populate([{ path: "categoryId", select: "name" }]);
+  // const subCategoryNames = subCategory.map((subCategory) => subCategory.name);
   // response
-  return res.status(201).json({ message: "Done", subCategoryNames });
+  return res.status(201).json({ message: "Done", subCategory });
 });
