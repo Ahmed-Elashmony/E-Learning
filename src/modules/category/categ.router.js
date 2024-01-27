@@ -12,6 +12,6 @@ router.post(
   categoryController.createCateg
 );
 
-router.get("/", isAuth, categoryController.getCateg);
+router.get("/", categoryController.getCateg);
 
 export default router;
