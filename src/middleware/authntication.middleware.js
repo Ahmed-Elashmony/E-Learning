@@ -6,6 +6,7 @@ import userModel from "../../DB/model/user.model.js";
 const isAuth = asyncHandler(async (req, res, next) => {
   // check token exits and type
   let { token } = req.headers;
+
   if (!token?.startsWith(process.env.BEARER_TOKEN)) {
     return next(new Error("required valid token"), { cause: 400 });
   }
@@ -15,7 +16,7 @@ const isAuth = asyncHandler(async (req, res, next) => {
   if (!decoded?.id) {
     return next(new Error("inVaild Payload", { cause: 404 }));
   }
-  req.userId=decoded.id;
+  req.userId = decoded.id;
   const user = await userModel.findById(decoded.id);
   // check Online and deleted accounts
   if (!user.isOnline) {
