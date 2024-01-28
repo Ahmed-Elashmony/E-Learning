@@ -5,6 +5,7 @@ import uploadRouter from "./modules/upload/upload.router.js";
 import courseRouter from "./modules/course/course.router.js";
 import categRouter from "./modules/category/categ.router.js";
 import SubCategRouter from "./modules/subCategory/subCateg.router.js";
+import cartRouter from "./modules/cart/cart.router.js";
 import { globalErrorHandler } from "./utils/asyncHandling.js";
 import cors from "cors";
 
@@ -20,6 +21,7 @@ const appRouter = (app, express) => {
   app.use("/course", courseRouter);
   app.use("/category", categRouter);
   app.use("/subCategory", SubCategRouter);
+  app.use("/cart", cartRouter);
 
   app.all("*", (req, res) => {
     return res.json({ message: "inVaild Path" });
