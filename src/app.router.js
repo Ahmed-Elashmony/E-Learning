@@ -24,7 +24,7 @@ const appRouter = (app, express) => {
   app.use("/cart", cartRouter);
 
   app.all("*", (req, res) => {
-    return res.json({ message: "inVaild Path" });
+    return res.status(404).json({ message: "invalid Path" });
   });
 
   connectDB();

@@ -2,100 +2,135 @@ import { Schema, model, Types } from "mongoose";
 
 const courseSchema = new Schema(
   {
-
     title: {
       type: String,
-      required:function () {
-        return !this.drafted;
-      },
-      max:60
-      //unique: true
+      required: true,
+      max: 60,
     },
-    subTitle:{
+    subtitle: {
       type: String,
-      required:function () {
-        return !this.drafted;
+      required: function () {
+        return !(this.status === "Draft");
       },
-      max:120
+      max: 120,
+      set: (value) => (value === "" ? null : value),
     },
-    description:{
+    description: {
       type: String,
-      required:function () {
-        return !this.drafted;
+      required: function () {
+        return !(this.status === "Draft");
       },
-      max:200
+      max: 200,
+      set: (value) => (value === "" ? null : value),
     },
     language: {
       type: String,
-      required:function () {
-        return !this.drafted;
-      }
-    },
-    tags: [{
-      type: String,
-      max:30,
-      required:function () {
-        return !this.drafted;
+      required: function () {
+        return !(this.status === "Draft");
       },
-    }],
-    level:{
-      type: String,
-      enum: ["Beginner", "Intermediate","Expert" , "All Levels"],
-      required:function () {
-        return !this.drafted;
+      set: (value) => (value === "" ? null : value),
+    },
+    tags: [
+      {
+        type: String,
+        max: 30,
+        required: function () {
+          return !(this.status === "Draft");
+        },
+        set: (value) => (value === "" ? null : value),
       },
+    ],
+    level: {
+      type: String,
+      enum: ["Beginner", "Intermediate", "Expert", "All Levels"],
+      required: function () {
+        return !(this.status === "Draft");
+      },
+      set: (value) => (value === "" ? null : value),
     },
-    coverImage: {
-      url: { type: String, required:function () {
-        return !this.drafted;
-      },},
-      id: { type: String, required:function () {
-        return !this.drafted;
-      },},
+    coverImageUrl: {
+      type: String,
+      required: function () {
+        return !(this.status === "Draft");
+      },
+      set: (value) => (value === "" ? null : value),
     },
-    promotionalVideoUrl:{
-      type:String
+    coverImageBlobName: {
+      type: String,
+      required: function () {
+        return !(this.status === "Draft");
+      },
+      set: (value) => (value === "" ? null : value),
     },
-    price: { type: Number, min: 0, required:function () {
-      return !this.drafted;
-    },},
-    discount: { type: Number, min: 1, max: 100 }, // %
-    createdBy: { type: Types.ObjectId, ref: "User", 
-    required:function () {
-      return !this.drafted;
-    },},
-    category: { type: Types.ObjectId, ref: "Category", 
-    required:function () {
-      return !this.drafted;
-    },},
-    subCategory:{ type: Types.ObjectId, ref: "SubCategory",
-     required:function () {
-      return !this.drafted;
-    },},
-    instructors:[ 
+    promotionalVideoUrl: {
+      type: String,
+      set: (value) => (value === "" ? null : value),
+    },
+    promotionalVideoBlobName: {
+      type: String,
+      required: function () {
+        return !(this.status === "Draft");
+      },
+      set: (value) => (value === "" ? null : value),
+    },
+    price: {
+      type: Number,
+      min: 0,
+      required: function () {
+        return !(this.status === "Draft");
+      },
+      set: (value) => (value === "" ? null : value),
+    },
+    discount: {
+      type: Number,
+      min: 1,
+      max: 100,
+      set: (value) => (value === "" ? null : value),
+    }, // %
+    createdBy: {
+      type: Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    category: {
+      type: Types.ObjectId,
+      ref: "Category",
+      required: function () {
+        return !(this.status === "Draft");
+      },
+      set: (value) => (value === "" ? null : value),
+    },
+    subCategory: {
+      type: Types.ObjectId,
+      ref: "SubCategory",
+      required: function () {
+        return !(this.status === "Draft");
+      },
+      set: (value) => (value === "" ? null : value),
+    },
+    instructors: [
       {
         type: Types.ObjectId,
         ref: "User",
-        required:function () {
-          return !this.drafted;
+        required: function () {
+          return !(this.status === "Draft");
         },
-      }
+        set: (value) => (value === "" ? null : value),
+      },
     ],
 
-    students:[
+    students: [
       {
         type: Types.ObjectId,
         ref: "User",
-      }
+        set: (value) => (value === "" ? null : value),
+      },
     ],
-    drafted:{
-      type:Boolean,
-      required:true
+    status: {
+      type: String,
+      enum: ["Draft", "Pending", "Published"],
+      default: "Draft",
     },
-    previewed:{
-      type:Boolean,
-      default:false 
-    }
   },
   { timestamps: true }
 );
