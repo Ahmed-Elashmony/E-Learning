@@ -1,9 +1,9 @@
 import { Router } from "express";
 const router = Router();
 import * as courseController from "./course.controller.js";
-import { validation } from "../../middleware/validation.js";
+import { validation } from "../../middleware/validation.middleware.js";
 import * as validators from "./course.validation.js";
-import isAuth from "../../middleware/authntication.middleware.js";
+import isAuth from "../../middleware/authentication.middleware.js";
 // router.post("/createCourse",courseController.createCourse)
 router.post("/createCourse",isAuth,
 validation(validators.createCourseSchema),

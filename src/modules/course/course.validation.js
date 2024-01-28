@@ -1,5 +1,5 @@
 import joi from "joi";
-import { isValidObjectId } from "../../middleware/validation.js";
+import { isValidObjectId } from "../../middleware/validation.middleware.js";
 const courseTitle =joi.string().max(60);
 const courseSubTitle =joi.string().max(120);
 const courseCategory =joi.string().custom(isValidObjectId);
