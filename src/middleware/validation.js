@@ -9,8 +9,9 @@ export const validation = (Schema) => {
       { abortEarly: false }
     );
     if (validationResult.error) {
-      return res.json({
-        message: "validation err",
+      return res.status(422).json({
+        // 422 Unprocessable Entity
+        message: "validation error",
         ValidationError: validationResult.error.details,
       });
     }
