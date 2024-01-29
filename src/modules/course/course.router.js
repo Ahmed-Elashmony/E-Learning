@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import * as courseController from "./course.controller.js";
-import { validation } from "../../middleware/validation.middleware.js";
+import { validation } from "../../middleware/validation.js";
 import * as validators from "./course.validation.js";
 import isAuthenticated from "../../middleware/authntication.middleware.js";
 import isAuthorized from "./course.authorization.js";
