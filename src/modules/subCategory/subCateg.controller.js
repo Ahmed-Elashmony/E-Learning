@@ -1,4 +1,4 @@
-import subCategoryModel from "../../../DB/model/subCategory.js";
+import subCategoryModel from "../../../DB/model/subCategory.model.js";
 import { asyncHandler } from "../../utils/asyncHandling.js";
 
 export const createSubCateg = asyncHandler(async (req, res, next) => {
