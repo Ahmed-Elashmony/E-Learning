@@ -1,7 +1,7 @@
 import { asyncHandler } from "../../utils/asyncHandling.js";
 import workshopModel from "../../../DB/model/workshop.model.js";
 import categoryModel from "../../../DB/model/category.model.js";
-import subCategoryModel from "../../../DB/model/subCategory.js";
+import subCategoryModel from "../../../DB/model/subCategory.model.js";
 import cloudinary from "../../utils/cloud.js";
 import slugify from "slugify";
 
