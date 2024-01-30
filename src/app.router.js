@@ -3,7 +3,7 @@ import authRouter from "./modules/auth/auth.router.js";
 import userRouter from "./modules/user/user.router.js";
 import uploadRouter from "./modules/upload/upload.router.js";
 import workshopRouter from "./modules/workshop/workshop.router.js";
-// import roomRouter from "./modules/room/room.router.js"
+import roomRouter from "./modules/room/room.router.js"
 import courseRouter from "./modules/course/course.router.js";
 import categRouter from "./modules/category/categ.router.js";
 import SubCategRouter from "./modules/subCategory/subCateg.router.js";
